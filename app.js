@@ -167,11 +167,11 @@
         '<td><div class="wine-desc">' + escapeHtml(w.description) + '</div>' +
           (tags ? '<div class="wine-tags">' + tags + '</div>' : '') + '</td>' +
         '<td>' + escapeHtml(w.supplierLabel) + '</td>' +
-        '<td>' + escapeHtml(w.typeLabel) + '</td>' +
-        '<td>' + escapeHtml(w.regionLabel) + '</td>' +
+        '<td class="col-type">' + escapeHtml(w.typeLabel) + '</td>' +
+        '<td class="col-region">' + escapeHtml(w.regionLabel) + '</td>' +
         '<td class="num">' + money(w.cost) + '</td>' +
-        '<td class="num">' + money(w.rsp) + '</td>' +
-        '<td class="num">' + pct(w.marginPct) + '</td>' +
+        '<td class="num col-rsp">' + money(w.rsp) + '</td>' +
+        '<td class="num col-margin">' + pct(w.marginPct) + '</td>' +
         '<td class="num"><input type="number" min="0" step="1" class="qty-input" data-id="' + w.id + '" value="' + (qty || '') + '" placeholder="0"></td>' +
         '<td class="num line-total">' + money(lineTotal) + '</td>';
 
@@ -261,12 +261,12 @@
       tr.innerHTML =
         '<td class="wine-desc">' + escapeHtml(w.description) + '</td>' +
         '<td>' + escapeHtml(w.supplierLabel) + '</td>' +
-        '<td>' + escapeHtml(w.typeLabel) + '</td>' +
-        '<td>' + escapeHtml(w.regionLabel) + '</td>' +
-        '<td>' + (w.organic ? '<span class="bool-yes">Yes</span>' : '<span class="bool-no">—</span>') + '</td>' +
-        '<td>' + (w.vegan ? '<span class="bool-yes">Yes</span>' : '<span class="bool-no">—</span>') + '</td>' +
+        '<td class="col-type">' + escapeHtml(w.typeLabel) + '</td>' +
+        '<td class="col-region">' + escapeHtml(w.regionLabel) + '</td>' +
+        '<td class="col-organic">' + (w.organic ? '<span class="bool-yes">Yes</span>' : '<span class="bool-no">—</span>') + '</td>' +
+        '<td class="col-vegan">' + (w.vegan ? '<span class="bool-yes">Yes</span>' : '<span class="bool-no">—</span>') + '</td>' +
         '<td class="num">' + money(w.cost) + '</td>' +
-        '<td class="num">' + money(w.rsp) + '</td>' +
+        '<td class="num col-rsp">' + money(w.rsp) + '</td>' +
         '<td><button class="icon-btn" data-edit="' + w.id + '">Edit</button></td>';
       tbody.appendChild(tr);
     });

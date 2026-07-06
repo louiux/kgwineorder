@@ -528,3 +528,45 @@ button, input, select {
   padding: 10px 4px;
 }
 
+/* ---------- Mobile ---------- */
+@media (max-width: 720px) {
+  .app { padding: 14px; }
+
+  .topbar-inner { padding: 12px 16px; gap: 10px; }
+  .brand-name { font-size: 15px; }
+  .brand-mark { font-size: 16px; padding: 3px 8px; }
+  .tabs { width: 100%; }
+  .tab-btn { flex: 1; padding: 9px 8px; font-size: 13px; }
+
+  .toolbar, .manage-toolbar { flex-direction: column; align-items: stretch; }
+  .search-input { flex: 1 1 auto; }
+  .filters { width: 100%; }
+  .filters select, .chip-toggle { flex: 1 1 120px; }
+  .filters #clear-filters { width: 100%; }
+
+  .wine-table th, .wine-table td { padding: 9px 10px; font-size: 12.5px; }
+  .wine-table .col-type,
+  .wine-table .col-region,
+  .wine-table .col-rsp,
+  .wine-table .col-margin { display: none; }
+
+  .qty-input { width: 48px; padding: 7px 4px; font-size: 14px; }
+
+  .order-summary { position: static; top: auto; }
+
+  .modal { padding: 20px; }
+  .form-grid { grid-template-columns: 1fr; }
+
+  .order-forms-tabs { gap: 6px; }
+  .order-sheet-header { flex-direction: column; align-items: stretch; }
+  .order-sheet-actions { flex-wrap: wrap; }
+  .order-sheet-actions .btn { flex: 1 1 auto; }
+}
+
+@media (max-width: 480px) {
+  .manage-table .col-organic,
+  .manage-table .col-vegan { display: none; }
+
+  .wine-table th, .wine-table td { padding: 8px 8px; font-size: 12px; }
+}
+
