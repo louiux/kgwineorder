@@ -550,6 +550,10 @@ button, input, select {
   .wine-table .col-rsp,
   .wine-table .col-margin { display: none; }
 
+  /* A sticky table header fights the sticky top nav for the top of the
+     screen on mobile Safari; drop it here since the nav matters more. */
+  .wine-table thead th { position: static; }
+
   .qty-input { width: 48px; padding: 7px 4px; font-size: 14px; }
 
   .order-summary { position: static; top: auto; }
