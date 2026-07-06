@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KG Wines — Ordering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">KG</span>
+      <span class="brand-name">Wines&nbsp;Ordering</span>
+    </div>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="order">Order</button>
+      <button class="tab-btn" data-tab="manage">Wine List</button>
+    </nav>
+  </div>
+</header>
+
+<main class="app">
+
+  <!-- ORDER TAB -->
+  <section id="tab-order" class="tab-panel active">
+    <div class="order-layout">
+
+      <div class="order-main">
+        <div class="toolbar">
+          <input id="search" type="text" placeholder="Search wines, e.g. &quot;Rioja&quot; or &quot;Malbec&quot;..." class="search-input">
+          <div class="filters">
+            <select id="filter-supplier"><option value="">All Suppliers</option></select>
+            <select id="filter-type"><option value="">All Types</option></select>
+            <select id="filter-region"><option value="">All Regions</option></select>
+            <label class="chip-toggle"><input type="checkbox" id="filter-organic"> Organic</label>
+            <label class="chip-toggle"><input type="checkbox" id="filter-vegan"> Vegan</label>
+            <label class="chip-toggle"><input type="checkbox" id="filter-ordered"> In order only</label>
+            <button id="clear-filters" class="btn btn-ghost btn-sm">Clear filters</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="wine-table">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="description">Wine</th>
+                <th class="sortable" data-sort="supplierLabel">Supplier</th>
+                <th class="sortable" data-sort="typeLabel">Type</th>
+                <th class="sortable" data-sort="regionLabel">Region</th>
+                <th class="num sortable" data-sort="cost">Cost</th>
+                <th class="num sortable" data-sort="rsp">RSP</th>
+                <th class="num sortable" data-sort="marginPct">Margin</th>
+                <th class="num">Qty</th>
+                <th class="num">Total</th>
+              </tr>
+            </thead>
+            <tbody id="wine-tbody"></tbody>
+          </table>
+          <p id="empty-state" class="empty-state" hidden>No wines match your filters.</p>
+        </div>
+      </div>
+
+      <aside class="order-summary">
+        <h2>Current Order</h2>
+        <div id="summary-empty" class="summary-empty">No items added yet. Set quantities on the left to build an order.</div>
+        <div id="summary-content" hidden>
+          <div class="summary-suppliers" id="summary-suppliers"></div>
+          <div class="summary-totals">
+            <div class="row"><span>Bottles</span><strong id="sum-bottles">0</strong></div>
+            <div class="row"><span>Cost (ex VAT)</span><strong id="sum-ex">£0.00</strong></div>
+            <div class="row"><span>Cost (inc VAT)</span><strong id="sum-inc">£0.00</strong></div>
+          </div>
+          <button id="btn-generate" class="btn btn-primary btn-block">Generate Order Forms</button>
+          <button id="btn-save-order" class="btn btn-ghost btn-block btn-sm">Save order to file</button>
+          <button id="btn-clear-order" class="btn btn-ghost btn-block btn-sm">Clear order</button>
+        </div>
+        <button id="btn-load-order" class="btn btn-ghost btn-block btn-sm load-order-btn">Load order from file</button>
+        <input type="file" id="load-order-input" accept="application/json" hidden>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- MANAGE / CMS TAB -->
+  <section id="tab-manage" class="tab-panel">
+    <div class="manage-toolbar">
+      <input id="manage-search" type="text" placeholder="Search wine list..." class="search-input">
+      <button id="btn-add-wine" class="btn btn-primary btn-sm">+ Add Wine</button>
+      <button id="btn-restore-defaults" class="btn btn-ghost btn-sm">Restore original list</button>
+    </div>
+    <div class="table-wrap">
+      <table class="wine-table manage-table">
+        <thead>
+          <tr>
+            <th>Wine</th>
+            <th>Supplier</th>
+            <th>Type</th>
+            <th>Region</th>
+            <th>Organic</th>
+            <th>Vegan</th>
+            <th class="num">Cost</th>
+            <th class="num">RSP</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="manage-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<!-- Edit Wine Modal -->
+<div id="wine-modal" class="modal-backdrop" hidden>
+  <div class="modal">
+    <h3 id="wine-modal-title">Edit Wine</h3>
+    <form id="wine-form">
+      <input type="hidden" id="f-id">
+      <label>Description
+        <input type="text" id="f-description" required>
+      </label>
+      <div class="form-grid">
+        <label>Supplier
+          <input type="text" id="f-supplier" list="supplier-list" required>
+          <datalist id="supplier-list"></datalist>
+        </label>
+        <label>Type
+          <input type="text" id="f-type" list="type-list" required>
+          <datalist id="type-list"></datalist>
+        </label>
+        <label>Region
+          <input type="text" id="f-region" list="region-list">
+          <datalist id="region-list"></datalist>
+        </label>
+        <label>Cost £ (ex VAT)
+          <input type="number" step="0.01" id="f-cost" required>
+        </label>
+        <label>RSP £ (inc VAT)
+          <input type="number" step="0.01" id="f-rsp" required>
+        </label>
+        <label class="checkbox-label"><input type="checkbox" id="f-organic"> Organic</label>
+        <label class="checkbox-label"><input type="checkbox" id="f-vegan"> Vegan</label>
+      </div>
+      <div class="modal-actions">
+        <button type="button" id="btn-delete-wine" class="btn btn-danger btn-sm">Delete</button>
+        <div class="spacer"></div>
+        <button type="button" id="btn-cancel-modal" class="btn btn-ghost btn-sm">Cancel</button>
+        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Order Forms Modal -->
+<div id="order-modal" class="modal-backdrop" hidden>
+  <div class="modal modal-lg">
+    <div class="modal-header-row">
+      <h3>Order Forms</h3>
+      <button id="btn-close-order" class="btn btn-ghost btn-sm">Close</button>
+    </div>
+    <div id="order-forms-tabs" class="order-forms-tabs"></div>
+    <div id="order-forms-content"></div>
+  </div>
+</div>
+
+<script src="data/wines.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
